@@ -1,0 +1,117 @@
+/* GENERAL */
+
+body {
+  font-family: 'anton', sans-serif;
+}
+
+.titre a {
+  text-decoration: none;
+  color: #003677;
+}
+
+.banniere {
+  width: 50%;
+}
+
+.bannieretop {
+  width: 100%;
+  background-color: #002e66;
+  align-content: center;
+  border-bottom: solid;
+  border-top: solid;
+  border-color: white;
+}
+
+.logobanniere {
+  width: 30%;
+  margin-left: 35%;
+}
+
+.text {
+  font-size: 10px;
+  width: 60%;
+  margin-left: 20%;
+  text-align: justify;
+}
+
+/* NAVBAR */
+
+.navbar-custom {
+    background-color: #002044;
+}
+
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: rgba(114,133,143,1);
+    font-size: 20px;
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(114,133,143,0.8);
+}
+
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+
+.navbar-custom .dropdown-menu {
+    background-color: #002044;
+}
+
+.navbar-custom .dropdown-item {
+    color: #ffffff;
+}
+
+.navbar-custom .dropdown-item:hover,
+.navbar-custom .dropdown-item:focus {
+    color: #ffffff;
+    background-color: rgba(114,133,143,.5);
+}
+
+nav {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+/* IMAGES */
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: rgba(99,127,162,.1);
+  border-radius: 3%;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.images {
+	display: flex;
+	flex-wrap: nowrap;
+	width: 60%;
+	margin-left: 20%;
+  margin-bottom: 2%;
+}
