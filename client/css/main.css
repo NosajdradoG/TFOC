@@ -322,6 +322,9 @@ ul li {
   margin-left: 6.35%;
   z-index: -10;
 }
+.imageDeLaBanniere {
+  width: 100%;
+}
 .titre {
   line-height: 35px;
   font-size: 35px;
@@ -377,31 +380,42 @@ footer {
  margin-bottom: 6.35%;
 }
 .imgPart {
-  width: 150px;
-  height: 150px;
-  margin: 5%;
-  margin-left: 12%;
-  margin-bottom: 12%;
+  width: 250px;
+  height: 250px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 2.5%;
+  margin-top: 2.5%;
+  cursor: pointer;
+}
+.imgPartIndex {
+  width: 280px;
+  height: 280px;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 2.5%;
+  margin-top: 2.5%;
+  cursor: pointer;
 }
 #Prives {
-  width: 50%;
-  margin-left: 25%;
-  margin-right: 25%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 #Mediaparts {
-  width: 50%;
-  margin-left: 25%;
-  margin-right: 25%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 #Institutions {
-  width: 50%;
-  margin-left: 25%;
-  margin-right: 25%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 #Volleys {
-  width: 50%;
-  margin-left: 25%;
-  margin-right: 25%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 h3 {
   text-align: center;
@@ -409,34 +423,6 @@ h3 {
   padding-top: 1%;
   padding-bottom: 1%;
   color: white !important;
-}
-.mainDiv {
-  background-color: #f5f5f5;
-  margin-bottom: 5%;
-  user-select: none;
-}
-#rowPart {
-  display: flex;
-  justify-content: flex-start;
-}
-.partDesc {
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 5%;
-  font-size: 14px;
-}
-.lienPart {
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-bottom: 5%;
-}
-.imagePart {
-  margin: 1%;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
-}
-.DescPart {
-  flex-grow: 1;
 }
 #clickInter1 {
   cursor: pointer;
@@ -449,4 +435,152 @@ h3 {
 #clickInter3 {
   cursor: pointer;
   font-size: 30px;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  padding-top: 8%; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+  text-align: justify;
+  text-align: center;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.mainDiv {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.divImgClick {
+  width: 262.5px;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  position: relative;
+  cursor: pointer;
+}
+.divImgClickIndex {
+  width: 305px;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  position: relative;
+  cursor: pointer;
+}
+.imgIn {
+  width: 200px;
+  height: 200px;
+}
+.contactIn {
+  display: flex;
+  justify-content: center;
+}
+.divContact {
+  text-align: left;
+  margin-left: 3%;
+}
+.picIn {
+  width: 100px;
+  height: 100px;
+  margin-right: 3%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 106%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: rgba(223,229,240,0.3);
+}
+
+.divImgClick:hover .overlay {
+  opacity: 1;
+}
+.divImgClickIndex:hover .overlay {
+  opacity: 1;
+}
+
+/* FILTER */
+.filterDiv {
+  width: 262.5px;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  position: relative;
+  cursor: pointer;
+  display: none;
+}
+.filterDiv:hover .overlay {
+  opacity: 1;
+}
+
+.show {
+  display: block;
+}
+
+.containerPart {
+  overflow: hidden;
+}
+
+/* Style the buttons */
+#myBtnContainer {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+}
+.btn {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  margin: 0.15%;
+}
+
+.btn:hover {
+  background-color: #ddd;
+}
+
+.btn.active {
+  background-color: #666;
+  color: white;
+  outline: none !important;
 }

@@ -67,6 +67,16 @@
 .lienPart {
 	display: none;
 }
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%;
+  text-align: justify;
+  text-align: center;
+}
 }
  @media screen and (max-width: 768px) {
 	 .banner {

@@ -9,30 +9,36 @@ var Instits = require('./models/instits.model');
 var Volleys = require('./models/volleys.model');
 var Users = require('./models/users.model');
 var session = require('express-session');
-var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 var db = require('./client/db');
 
-passport.use(new Strategy(
-  function(username, password, cb) {
-    db.users.findByUsername(username, function(err, user) {
-      if(err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      return cb(null, user);
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    Users.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
     });
-  }));
+  }
+));
 
 passport.serializeUser(function(user, cb) {
   cb(null, user.id);
 });
 
 passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function(err, user) {
+  Users.findById(id, function(err, user) {
     if (err) { return cb(err); }
     cb(null, user);
   })
 })
-// Config
+
 app.use(require('morgan')('combined'));
 app.use(require('cookie-parser')());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
@@ -47,32 +53,30 @@ app.use(bodyParser.json());
 
 
 // Co mongoose
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/TFOC');
+mongoose.connect('mongodb://localhost/TFOC', { useNewUrlParser: true });
 
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-   // console.log("db connected");
 });
 
 
-// api banniere
+// api de la banniere
 app.get('/api/bannieres', function (req, res) {
    Bannieres.find({},function(err,bannieres){
       if(err){
-        // console.log(err);
       }else{
-        // console.log(bannieres);
         res.json(bannieres);
       }
    });
 });
 
+// Update de la banniere
 app.post('/api/bannieres', function (req, res) {
-   console.log("req.body");
+   console.log('req.body');
    console.log(req.body);
    var newImgBan = req.body;
    var id = {_id: '5bf5483a1c4d152034eb6af0'};
@@ -87,20 +91,19 @@ app.post('/api/bannieres', function (req, res) {
 });
 
 
-// api avec les prives
+// api avec les parts prives
 app.get('/api/prives', function (req, res) {
    Prives.find({},function(err,prives){
       if(err){
-        // console.log(err);
       }else{
-        // console.log(prives);
         res.json(prives);
       }
    });
 });
-   
+
+// ajout d'un part prive
 app.post('/api/prives', function (req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   var newPartPrive = req.body;
   Prives.create(newPartPrive, function (err, newPartPrive) {
   if (err) {
@@ -109,124 +112,89 @@ app.post('/api/prives', function (req, res) {
     console.log('Nouveau part prive bien ajouté');
   }
   });
-  res.send("Nouveau partenaire privé ajouté !")
+  res.send('Nouveau partenaire privé ajouté !')
 });
 
 
-// api avec les interviews
+// api avec les interviews de la page accueil
 app.get('/api/interviews', function (req, res) {
    Interviews.find({},function(err,interviews){
       if(err){
-        // console.log(err);
       }else{
-        // console.log(interviews);
         res.json(interviews);
       }
    });
 });
 
-
-// api des mediaparts
+// api avec les parts medias
 app.get('/api/mediaparts', function (req, res) {
   Mediaparts.find({},function(err,mediaparts){
       if(err){
-        // console.log(err);
       }else{
-        // console.log(mediaparts);
         res.json(mediaparts);
       }
    });
 });
 
 
-// api des instits
+// api avec les parts instits
 app.get('/api/instits', function (req, res) {
   Instits.find({},function(err,instits){
       if(err){
-        // console.log(err);
       }else{
-        // console.log(instits);
         res.json(instits);
       }
    });
 });
 
 
-// api des volleys
+// api avec les parts volley
 app.get('/api/volleys', function (req, res) {
   Volleys.find({},function(err,volleys){
       if(err){
-        // console.log(err);
       }else{
-        // console.log(volleys);
         res.json(volleys);
       }
    });
 });
 
 
-// api des users
+// api avec les users
 app.get('/api/users', function (req, res) {
   Users.find({},function(err,users){
       if(err){
-        // console.log(err);
       }else{
-        // console.log(users);
         res.json(users);
       }
    });
 });
-
 
 // Page accueil
 app.get('/', function (req, res) {
    res.sendFile(__dirname + '/client/index.html', { user: req.user });
 });
 
-
-// Page login
-app.get('/login', function (req, res) {
-   res.sendFile(__dirname + '/client/login.html');
+// Page partenaires
+app.get('/partenaires', function (req, res) {
+   res.sendFile(__dirname + '/client/partenaires.html');
 });
-
 
 // Page signup
 app.get('/signup', function (req, res) {
    res.sendFile(__dirname + '/client/signup.html');
 });
 
-
-// Page prives
-app.get('/prives', function (req, res) {
-   res.sendFile(__dirname + '/client/prives.html');
+// Page login
+app.get('/login', function (req, res) {
+   res.sendFile(__dirname + '/client/login.html');
 });
-
-
-// Page medias
-app.get('/medias', function (req, res) {
-   res.sendFile(__dirname + '/client/medias.html');
-});
-
-
-// Page institutions
-app.get('/institutions', function (req, res) {
-   res.sendFile(__dirname + '/client/institutions.html');
-});
-
-
-// Page volleys
-app.get('/volley-ball', function (req, res) {
-   res.sendFile(__dirname + '/client/volley.html');
-});
-
 
 // Page admin
 app.get('/admin', function (req, res) {
    res.sendFile(__dirname + '/client/admin.html');
 });
 
-
-// Gérer l'inscription
+// ajout d'un user
 app.post('/signup', function(req,res) {
   res.redirect('/login')
   console.log(req.body);
@@ -240,20 +208,22 @@ app.post('/signup', function(req,res) {
   });
 });
 
-
 // Gérer la connexion
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
+    var userUsername = req.user.username;
+    console.log('USERNAME:' + userUsername);  
   });
 
-
+// Déconnexion /!\ NE FONCTIONNE PAS /!\
 app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 })
 
+// Profile /!\ NE FONCTIONNE PAS /!\
 app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res) {

@@ -1,11 +1,17 @@
-req.open('GET', '/api/instits', false);
+req.open('GET', '/api/interviews', false);
 req.send(null);
 
 if (req.status === 200) {
-    var institutions = JSON.parse(req.responseText);
-    var institutionsTxt = JSON.stringify(institutions);
-} else {
-    console.log("Status de la réponse: %d (%s)", req.status, req.statusText);
+	var interviews = JSON.parse(req.responseText);
+
+	$(document).ready(function(){
+		$("#myDIV1").fadeToggle("fast");
+	    $("#clickInter1").click(function(){
+		    $("#myDIV1").fadeToggle("fast");
+		});
+	});
+}else {
+    console.log('Status de la réponse: %d (%s)', req.status, req.statusText);
 }
 
 var div = document.createElement('div');
@@ -14,14 +20,13 @@ var mainDiv = document.createElement('div');
 mainDiv.setAttribute('class', 'mainDiv');
 div.appendChild(mainDiv);
 
-institutions.forEach(function(element, index){
+interviews.forEach(function(element, index){
     var divImgClick = document.createElement('div');
     divImgClick.setAttribute('id', 'opnModal'+index);
-    divImgClick.setAttribute('class', 'divImgClick');
-    divImgClick.setAttribute('class', 'filterDiv ' + element.categorie);
+    divImgClick.setAttribute('class', 'divImgClickIndex');
     var imgPartToClick = document.createElement('img');
     imgPartToClick.setAttribute('src', element.logo);
-    imgPartToClick.setAttribute('class', 'imgPart');
+    imgPartToClick.setAttribute('class', 'imgPartIndex');
     divImgClick.appendChild(imgPartToClick);
     var overlay = document.createElement('div');
     overlay.setAttribute('class', 'overlay');
@@ -106,4 +111,4 @@ institutions.forEach(function(element, index){
     }
 });
 
-document.getElementById('Institutions').appendChild(div);
+document.getElementById('Interviews').appendChild(div);

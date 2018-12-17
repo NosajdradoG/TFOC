@@ -9,47 +9,102 @@ if (req.status === 200) {
 }
 
 
-
-var div = document.createElement("div");
-div.setAttribute("width", "100%");
+var div = document.createElement('div');
+div.setAttribute('width', '100%');
+var mainDiv = document.createElement('div');
+mainDiv.setAttribute('class', 'mainDiv');
+div.appendChild(mainDiv);
 
 mediaparts.forEach(function(element, index){
-    var mainDiv = document.createElement("div");
-    mainDiv.setAttribute("class", "mainDiv");
-    div.appendChild(mainDiv);
-    var h3 = document.createElement("h3");
-    h3.innerHTML = element.nom;
-    h3.setAttribute("id", index);
-    mainDiv.appendChild(h3);
-    var divRow = document.createElement("div");
-    divRow.setAttribute("class", "row");
-    divRow.setAttribute("id", "rowPart");
-    mainDiv.appendChild(divRow);
-    var divCol = document.createElement("div");
-    divCol.setAttribute("class", "imagePart");
-    divRow.appendChild(divCol);
-    var a = document.createElement("a");
-    a.setAttribute("href", element.lien);
-    divCol.appendChild(a);
-    var img = document.createElement("img");
-    img.setAttribute("src", element.logo);
-    img.setAttribute("class", "imgPart");
-    a.appendChild(img);
-    var divCol2 = document.createElement("div");
-    divCol2.setAttribute("class", "DescPart");
-    divRow.appendChild(divCol2);
-    var p = document.createElement("p");
-    p.setAttribute("class", "partDesc");
-    p.innerHTML = element.description;
-    divCol2.appendChild(p);
-    var a2 = document.createElement("a");
-    a2.setAttribute("href", element.lien);
-    a2.setAttribute("class", "lienPart");
-    a2.innerHTML = "Visitez le site ";
-    divCol2.appendChild(a2);
-    var i = document.createElement("i");
-    i.setAttribute("class", "fa fa-external-link");
-    a2.appendChild(i);
+    var divImgClick = document.createElement('div');
+    divImgClick.setAttribute('id', 'opnModal'+index);
+    divImgClick.setAttribute('class', 'divImgClick');
+    divImgClick.setAttribute('class', 'filterDiv ' + element.categorie);
+    var imgPartToClick = document.createElement('img');
+    imgPartToClick.setAttribute('src', element.logo);
+    imgPartToClick.setAttribute('class', 'imgPart');
+    divImgClick.appendChild(imgPartToClick);
+    var overlay = document.createElement('div');
+    overlay.setAttribute('class', 'overlay');
+    divImgClick.appendChild(overlay);
+    mainDiv.appendChild(divImgClick);
+    var divModal = document.createElement('div');
+    divModal.setAttribute('id', 'myModal');
+    divModal.setAttribute('class', 'modal');
+    mainDiv.appendChild(divModal);
+    var divModalContent = document.createElement('div');
+    divModalContent.setAttribute('class', 'modal-content');
+    divModal.appendChild(divModalContent);
+    var divClose = document.createElement('div');
+    divClose.setAttribute('class', 'close');
+    divClose.innerHTML = '&times;';
+    divModalContent.appendChild(divClose);
+    var nomIn = document.createElement('h3');
+    nomIn.innerHTML = element.nom;
+    divModalContent.appendChild(nomIn);
+    var imgIn = document.createElement('img');
+    imgIn.setAttribute('src', element.logo);
+    imgIn.setAttribute('class', 'imgIn');
+    divModalContent.appendChild(imgIn);
+    var pDesc = document.createElement('p');
+    pDesc.innerHTML = element.description;
+    divModalContent.appendChild(pDesc);
+    var a = document.createElement('a');
+    a.setAttribute('href', element.lien);
+    a.setAttribute('class', 'lienPart');
+    a.setAttribute('target', '_blank');
+    a.innerHTML = 'Visitez le site ';
+    divModalContent.appendChild(a);
+    var i = document.createElement('i');
+    i.setAttribute('class', 'fa fa-external-link');
+    a.appendChild(i);
+    var hr = document.createElement('hr');
+    divModalContent.appendChild(hr);
+    var h5In = document.createElement('h5');
+    h5In.setAttribute('class', 'h5In');
+    h5In.innerHTML = 'Contact :';
+    divModalContent.appendChild(h5In);
+    var contactIn = document.createElement('div');
+    contactIn.setAttribute('class', 'contactIn');
+    divModalContent.appendChild(contactIn);
+    var picIn = document.createElement('img');
+    picIn.setAttribute('src', element.picIn);
+    picIn.setAttribute('class', 'picIn')
+    contactIn.appendChild(picIn);
+    var divContact = document.createElement('div');
+    divContact.setAttribute('class', 'divContact');
+    contactIn.appendChild(divContact);
+    var nomContact = document.createElement('p');
+    nomContact.innerHTML = 'Votre contact : ' + element.nomContact;
+    divContact.appendChild(nomContact);
+    var adresse = document.createElement('p');
+    adresse.innerHTML = 'Adresse : ' + element.adresse;
+    divContact.appendChild(adresse);
+    var telephone = document.createElement('p');
+    telephone.innerHTML = 'Tel. : ' + element.telephone;
+    divContact.appendChild(telephone);
+    var mail = document.createElement('p');
+    mail.innerHTML = 'Mail : ' + element.mail;
+    divContact.appendChild(mail);
+
+    // When the user clicks the divImgClick, open the modal 
+    divImgClick.onclick = function() {
+      divModal.style.display = 'block';
+    }
+
+    // When the user clicks on <span> (x), close the divModal
+    divClose.onclick = function() {
+      divModal.style.display = 'none';
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    divModal.onclick = function(event) {
+        // console.log(event.target)
+        // console.log(divModal)
+        if (event.target == divModal) {
+            divModal.style.display = 'none';
+        }
+            
+    }
 });
 
-document.getElementById("Mediaparts").appendChild(div);
+document.getElementById('Mediaparts').appendChild(div);

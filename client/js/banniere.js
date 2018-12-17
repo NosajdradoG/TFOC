@@ -8,7 +8,7 @@ if (req.status === 200) {
 
 	var img = document.createElement("img");
 	img.setAttribute("src", banniere[0].imageBanniere);
-	img.setAttribute("width", "100%");
+	img.setAttribute("class", "imageDeLaBanniere");
 };
 
 document.getElementById("Container").appendChild(img);
